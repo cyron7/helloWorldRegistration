@@ -1,4 +1,6 @@
 <?php
+$directories = explode('/',__DIR__);
+$env = strtoupper($directories[(count($directories) - 2)]);
 /**
  * If you need an environment-specific system or application configuration,
  * there is an example in the documentation
@@ -8,6 +10,8 @@
 return array(
     // This should be an array of module namespaces used in the application.
     'modules' => array(
+        'DoctrineModule',
+        'DoctrineORMModule',
         'Application',
     ),
 
@@ -26,7 +30,8 @@ return array(
         // modules are loaded. These effectively override configuration
         // provided by modules themselves. Paths may use GLOB_BRACE notation.
         'config_glob_paths' => array(
-            'config/autoload/{{,*.}global,{,*.}local}.php',
+//            'config/autoload/{{,*.}global,{,*.}local}.php',
+            sprintf('config/autoload/{,*.}{global,%s,local}.php', 'PROD'),
         ),
 
         // Whether or not to enable a configuration cache.

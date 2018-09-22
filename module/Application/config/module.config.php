@@ -1,4 +1,6 @@
 <?php
+
+namespace Application;
 /**
  * Zend Framework (http://framework.zend.com/)
  *
@@ -20,6 +22,16 @@ return array(
                     ),
                 ),
             ),
+            'application-admin-report' => [
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => [
+                    'route'    => '/report/get',
+                    'defaults' => [
+                        'controller' => 'Application\Controller\Index',
+                        'action'     => 'getAdminReport',
+                    ],
+                ],
+            ],
             // The following is a route to simplify getting started creating
             // new controllers and actions without needing to create a new
             // module. Simply drop new controllers in, and you can access them
@@ -91,6 +103,9 @@ return array(
         'template_path_stack' => array(
             __DIR__ . '/../view',
         ),
+        'strategies' => array(
+            'ViewJsonStrategy',
+        ),
     ),
     // Placeholder for console routes
     'console' => array(
@@ -99,4 +114,20 @@ return array(
             ),
         ),
     ),
+    'doctrine' => [
+        'driver' => [
+            __NAMESPACE__ . '_entities' => [
+                'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
+                'cache' => 'array',
+                'paths' => [
+                    __DIR__ . '/../src/' . __NAMESPACE__ . '/Entity',
+                ],
+            ],
+            'orm_default' => [
+                'drivers' => [
+                    __NAMESPACE__ . '\Entity' => __NAMESPACE__ . '_entities',
+                ],
+            ],
+        ],
+    ],
 );
