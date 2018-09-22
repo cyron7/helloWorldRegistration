@@ -57,6 +57,11 @@ class Registration implements InputFilterAwareInterface {
     protected $State;
 
     /**
+     * @ORM\Column(type="string", nullable=false)
+     */
+    protected $Country;
+
+    /**
      * @ORM\Column(type="integer", nullable=false)
      */
     protected $Zip;
@@ -141,6 +146,16 @@ class Registration implements InputFilterAwareInterface {
         $this->Zip = $Zip;
     }
 
+    public function getCountry()
+    {
+        return $this->Country;
+    }
+
+    public function setCountry($Country)
+    {
+        $this->Country = $Country;
+    }
+
     public function getArrayCopy()
     {
         return get_object_vars($this);
@@ -156,6 +171,7 @@ class Registration implements InputFilterAwareInterface {
         $this->City = $data['City'];
         $this->State = $data['State'];
         $this->Zip = $data['Zip'];
+        $this->Country = $data['Country'];
     }
 
     public function setInputFilter(InputFilterInterface $inputFilter)
@@ -331,6 +347,29 @@ class Registration implements InputFilterAwareInterface {
                             'messages' => [
                                 Validator\StringLength::TOO_SHORT => 'Must be at least 5 characters long',
                                 Validator\StringLength::TOO_LONG => 'Must be less than 10 characters long'
+                            ]
+                        ],
+                    ],
+                ],
+            ]);
+
+            $inputFilter->add([
+                'name' => 'Country',
+                'required' => false,
+                'filters' => [
+                    ['name' => 'StripTags'],
+                    ['name' => 'StringTrim'],
+                ],
+                'validators' => [
+                    [
+                        'name' => 'StringLength',
+                        'options' => [
+                            'encoding' => 'UTF-8',
+                            'min' => 2,
+                            'max' => 100,
+                            'messages' => [
+                                Validator\StringLength::TOO_SHORT => 'Must be at least 2 characters long',
+                                Validator\StringLength::TOO_LONG => 'Must be less than 101 characters long'
                             ]
                         ],
                     ],
