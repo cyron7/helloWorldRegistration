@@ -41,6 +41,10 @@ class IndexController extends AbstractActionController {
         return new ViewModel();
     }
 
+    public function adminReportAction() {
+        return new ViewModel();
+    }
+
     public function getAdminReportAction() {
         $entityName = 'Application\Entity\Registration';
 

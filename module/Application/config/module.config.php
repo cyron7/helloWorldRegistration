@@ -25,6 +25,16 @@ return array(
             'application-admin-report' => [
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => [
+                    'route'    => '/report',
+                    'defaults' => [
+                        'controller' => 'Application\Controller\Index',
+                        'action'     => 'adminReport',
+                    ],
+                ],
+            ],
+            'application-admin-report-get' => [
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => [
                     'route'    => '/report/get',
                     'defaults' => [
                         'controller' => 'Application\Controller\Index',
