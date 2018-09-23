@@ -62,7 +62,18 @@ $(document).ready(function(){
         $('select#inputState').append(stateList.join( "" ));
     };
 
+    let setFormErrors = function(formErrors){
+        $.each(formErrors['Input Validation Error'], function(key, val){
+            console.log(key + ', ' + val);
+            $('form#registrationForm input[name="' + key + '"]').addClass('is-invalid');
+        });
+    };
+
     let loadSubmitFormOperations = function(){
+        //TODO: Need to remove the error blocks
+        // $('form#registrationForm input').onchange(function(e){
+        //     this.removeClass('is-invalid');
+        // });
         $('form#registrationForm').submit(function(e){
             e.preventDefault();
             $('div#mainMessageBox').removeClass('d-none').show();
@@ -85,6 +96,7 @@ $(document).ready(function(){
                             .removeClass('alert-primary')
                             .addClass('alert-danger')
                             .text('Failed to register');
+                        setFormErrors(data.messages);
                     }
                 }
             });

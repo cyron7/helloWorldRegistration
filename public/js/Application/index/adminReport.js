@@ -15,6 +15,7 @@ $(document).ready(function(){
                     "<td>" + checkNullReturnBlank(val.State) + "</td>" +
                     "<td>" + checkNullReturnBlank(val.Zip) + "</td>" +
                     "<td>" + checkNullReturnBlank(val.Country) + "</td>" +
+                    "<td>" + checkNullReturnBlank(val.Created) + "</td>" +
                     "</tr>" );
             });
             $('table#adminReport > tbody:last-child').append(items.join( "" ));

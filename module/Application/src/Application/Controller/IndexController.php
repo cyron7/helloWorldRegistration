@@ -67,7 +67,7 @@ class IndexController extends AbstractActionController {
         /**
          * @var \Application\Entity\Registration $entityResult
          */
-        $entityResult = $this->getEntityManager()->getRepository($entityName)->findAll();
+        $entityResult = $this->getEntityManager()->getRepository($entityName)->findBy([], ['Created' => 'DESC']);
 
         /** @var \Application\Entity\Registration[] $registeredUsers */
         $registeredUsers = [];

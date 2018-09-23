@@ -66,6 +66,11 @@ class Registration implements InputFilterAwareInterface {
      */
     protected $Zip;
 
+    /**
+     * @ORM\Column(type="string", nullable=false)
+     */
+    protected $Created;
+
     public function getPkid()
     {
         return $this->pkid;
@@ -158,6 +163,15 @@ class Registration implements InputFilterAwareInterface {
         }
     }
 
+    public function getCreated() {
+        return $this->Created;
+    }
+
+    public function setCreated($Created) {
+        $this->Created = $Created;
+    }
+
+
     public function getArrayCopy()
     {
         return get_object_vars($this);
@@ -174,6 +188,7 @@ class Registration implements InputFilterAwareInterface {
         $this->State = $data['State'];
         $this->setZip($data['Zip']);
         $this->setCountry($data['Country']);
+        $this->Created = $data['Created'];
     }
 
     public function setInputFilter(InputFilterInterface $inputFilter)
