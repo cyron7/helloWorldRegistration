@@ -9,6 +9,7 @@
 
 namespace Application\Controller;
 
+use Application\Entity\Registration;
 use Doctrine\ORM\EntityManager;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
@@ -29,20 +30,35 @@ class IndexController extends AbstractActionController {
     }
 
     public function indexAction() {
-        $entityName = 'Application\Entity\Registration';
-
-        /**
-         * @var \Application\Entity\Registration $entityResult
-         */
-        $entityResult = $this->getEntityManager()->getRepository($entityName)->findAll();
-
-        var_dump($entityResult);die('end');
-
         return new ViewModel();
     }
 
     public function adminReportAction() {
         return new ViewModel();
+    }
+
+    public function sendRegistrationInfoAction() {
+        $request = $this->getRequest()->getPost()->toArray();
+        $registration = new Registration();
+        $inputFilter = $registration->getInputFilter();
+        $inputFilter->setData($request);
+        $saveFailed = false;
+        $messages = [];
+        if($inputFilter->isValid()) {
+            $registration->exchangeArray($request);
+            $this->getEntityManager()->persist($registration);
+            try{
+                $this->getEntityManager()->flush();
+            }catch (\Exception $e){
+                $saveFailed = true;
+                $messages['System Fail'][] = 'Failed to save the registration';
+            }
+        } else {
+            $saveFailed = true;
+            $messages['Input Validation Error'] = $inputFilter->getMessages();
+        }
+
+        return new JsonModel(['success' => !$saveFailed, 'messages' => $messages]);
     }
 
     public function getAdminReportAction() {
@@ -61,5 +77,9 @@ class IndexController extends AbstractActionController {
         }
 
         return new JsonModel(['registeredUsers' => $registeredUsers]);
+    }
+
+    public function getRegistrationFormAction() {
+        return new ViewModel();
     }
 }
