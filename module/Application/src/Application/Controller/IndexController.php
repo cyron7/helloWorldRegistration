@@ -14,6 +14,7 @@ use Doctrine\ORM\EntityManager;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
+use Zend\XmlRpc\Value\Integer;
 
 class IndexController extends AbstractActionController {
 
@@ -34,6 +35,28 @@ class IndexController extends AbstractActionController {
     }
 
     public function adminReportAction() {
+        return new ViewModel();
+    }
+    
+    public function getConformationPageAction() {
+        $request = $_GET;
+        if(!empty($_GET['id']) && is_numeric($_GET['id'])) {
+            $entityName = 'Application\Entity\Registration';
+            $id = $_GET['id'];
+            /**
+             * @var \Application\Entity\Registration $entityResult
+             */
+            $entityResult = $this->getEntityManager()->getRepository($entityName)->findBy(['pkid' => $id]);
+            if($entityResult != false) {
+                $result = $entityResult[0];
+                $name = $result->getFirstName() . ' ' . $result->getLastName();
+                $address = '<br>' . $result->getAddress1() . '<br>' .
+                    $result->getCity() . ', ' .
+                    $result->getState() . ' ' .
+                    $result->getZip();
+                return new ViewModel(['name' => $name, 'address' => $address]);
+            }
+        }
         return new ViewModel();
     }
 
@@ -58,7 +81,7 @@ class IndexController extends AbstractActionController {
             $messages['Input Validation Error'] = $inputFilter->getMessages();
         }
 
-        return new JsonModel(['success' => !$saveFailed, 'messages' => $messages]);
+        return new JsonModel(['success' => !$saveFailed, 'id' => $registration->getPkid(), 'messages' => $messages]);
     }
 
     public function getAdminReportAction() {

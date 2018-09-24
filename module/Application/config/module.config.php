@@ -52,6 +52,16 @@ return array(
                     ],
                 ],
             ],
+            'application-get-conformation-page' => [
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => [
+                    'route'    => '/conformation',
+                    'defaults' => [
+                        'controller' => 'Application\Controller\Index',
+                        'action'     => 'getConformationPage',
+                    ],
+                ],
+            ],
             'application-admin-report-get' => [
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => [

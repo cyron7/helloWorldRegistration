@@ -1,0 +1,42 @@
+<?php
+/**
+ * @var String $name
+ * @var String $address
+ *
+ */
+//echo $this->headScript()->appendFile('https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js');
+//echo $this->headScript()->appendFile('http://ajax.aspnetcdn.com/ajax/jquery.validate/1.10.0/additional-methods.js');
+//echo $this->headScript()->appendFile($this->basePath('js/Application/index/getRegistrationForm.js'));
+?>
+<div class="row">
+    <div class="col-sm-12">
+        <h1 class="title">
+            Successfully Registered
+        </h1>
+        <hr>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        Your information was successfully submitted.
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        Name: <?= $name ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <br/>
+                        Address: <?= $address ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

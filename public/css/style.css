@@ -1,6 +1,7 @@
 body {
     padding-top: 60px;
     padding-bottom: 40px;
+    background-color: #677e74;
 }
 
 .zf-green {
@@ -34,4 +35,13 @@ div.container a.brand {
     background: url("../img/zf2-logo.png") no-repeat scroll 0 10px transparent;
     margin-left: 0;
     padding: 8px 20px 12px 40px;
+}
+
+footer {
+    /*background-color: #92a4ac;*/
+    color: #dddbdb;
+}
+
+h1.title{
+    text-shadow: 3px 3px 3px rgba(103,126,116, 0.7);
 }
