@@ -32,6 +32,36 @@ return array(
                     ],
                 ],
             ],
+            'application-registration-form' => [
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => [
+                    'route'    => '/form',
+                    'defaults' => [
+                        'controller' => 'Application\Controller\Index',
+                        'action'     => 'getRegistrationForm',
+                    ],
+                ],
+            ],
+            'application-send-registration-info' => [
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => [
+                    'route'    => '/registration-info/send',
+                    'defaults' => [
+                        'controller' => 'Application\Controller\Index',
+                        'action'     => 'sendRegistrationInfo',
+                    ],
+                ],
+            ],
+            'application-get-conformation-page' => [
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => [
+                    'route'    => '/conformation',
+                    'defaults' => [
+                        'controller' => 'Application\Controller\Index',
+                        'action'     => 'getConformationPage',
+                    ],
+                ],
+            ],
             'application-admin-report-get' => [
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => [

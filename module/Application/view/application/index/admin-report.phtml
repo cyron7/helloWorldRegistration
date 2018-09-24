@@ -1,12 +1,11 @@
 <?php
-//    $this->headScript()->appendFile($this->basePath('js/Application/index/adminReport.js'));
+    echo $this->headScript()->appendFile($this->basePath('js/Application/index/adminReport.js'));
+    echo $this->headLink()->appendStylesheet($this->basePath('css/Application/index/adminReport.css'));
 ?>
-<script src="../../../../../public/js/Application/index/adminReport.js" type="application/javascript"></script>
-<link link href="../../../../../public/css/Application/index/adminReport.css" rel="stylesheet" type="text/css" media="all"/>
 <div class="row">
-    <div class="col-xs-12">
-        <h1>
-            Admin Report<br><br>
+    <div class="col-sm-12">
+        <h1 class="title">
+            Admin Report
         </h1>
     </div>
 </div>
@@ -40,6 +39,9 @@
                 </th>
                 <th>
                     Country
+                </th>
+                <th>
+                    Created
                 </th>
             </tr>
             <tbody>

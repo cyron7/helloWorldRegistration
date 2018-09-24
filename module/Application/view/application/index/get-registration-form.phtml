@@ -1,0 +1,65 @@
+<?php
+    echo $this->headScript()->appendFile('https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js');
+    echo $this->headScript()->appendFile('http://ajax.aspnetcdn.com/ajax/jquery.validate/1.10.0/additional-methods.js');
+    echo $this->headScript()->appendFile($this->basePath('js/Application/index/getRegistrationForm.js'));
+?>
+<div class="row">
+    <div class="col-sm-12">
+        <h1 class="title">
+            Register
+        </h1>
+        <hr>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div id="mainMessageBox" class="alert alert-primary d-none" role="alert">
+            Processing.....
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12 col-md-6 offset-md-3 justify-content-center">
+        <form id="registrationForm">
+            <div class="form-group">
+                <label for="inputFirstName">First Name</label>
+                <input type="input" id="inputFirstName" name="First_Name" class="form-control" aria-describedby="firstNameHelp" placeholder="Your First Name">
+                <small id="firstNameHelp" class="form-text text-muted">Your first name</small>
+            </div>
+            <div class="form-group">
+                <label for="inputLastName">Last Name</label>
+                <input type="input" id="inputLastName" name="Last_Name" class="form-control" aria-describedby="firstNameHelp" placeholder="Your Last Name">
+                <small id="lastNameHelp" class="form-text text-muted">Your lase name</small>
+            </div>
+            <div class="form-group">
+                <label for="inputAddress">Address</label>
+                <input type="input" id="inputAddress" name="Address1" class="form-control" aria-describedby="addressHelp" placeholder="Address">
+                <small id="addressHelp" class="form-text text-muted">Street address only</small>
+            </div>
+            <div class="form-group">
+                <label for="inputAddress2">Address2</label>
+                <input type="input" id="inputAddress2" name="Address2" class="form-control" aria-describedby="address2Help" placeholder="Apt/Suit #">
+                <small id="address2Help" class="form-text text-muted">Optional second line address (EX: Apt#)</small>
+            </div>
+            <div class="form-group">
+                <label for="inputCity">City</label>
+                <input type="input" id="inputCity" name="City" class="form-control" aria-describedby="cityHelp" placeholder="City">
+                <small id="cityHelp" class="form-text text-muted">City part of the address</small>
+            </div>
+            <div class="form-group">
+                <label for="inputLastName">State</label>
+                <select id="inputState" name="State" class="form-control">
+                    <option disabled selected value> -- select a state -- </option>
+                </select>
+                <small id="lastNameHelp" class="form-text text-muted">State Name</small>
+            </div>
+            <div class="form-group">
+                <label for="inputZip">Zip</label>
+                <input type="input" id="inputZip" name="Zip" class="form-control" aria-describedby="zipHelp" placeholder="Zip">
+                <small id="zipHelp" class="form-text text-muted">Please enter your 5 or 9 digit zip code</small>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>

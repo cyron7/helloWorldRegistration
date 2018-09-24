@@ -59,12 +59,17 @@ class Registration implements InputFilterAwareInterface {
     /**
      * @ORM\Column(type="string", nullable=false)
      */
-    protected $Country;
+    protected $Country = 'US';
 
     /**
      * @ORM\Column(type="integer", nullable=false)
      */
     protected $Zip;
+
+    /**
+     * @ORM\Column(type="string", nullable=false)
+     */
+    protected $Created;
 
     public function getPkid()
     {
@@ -143,7 +148,7 @@ class Registration implements InputFilterAwareInterface {
 
     public function setZip($Zip)
     {
-        $this->Zip = $Zip;
+        $this->Zip = str_replace('-', '', $Zip);
     }
 
     public function getCountry()
@@ -153,8 +158,19 @@ class Registration implements InputFilterAwareInterface {
 
     public function setCountry($Country)
     {
-        $this->Country = $Country;
+        if(!empty($Country) && $Country != null) {
+            $this->Country = $Country;
+        }
     }
+
+    public function getCreated() {
+        return $this->Created;
+    }
+
+    public function setCreated($Created) {
+        $this->Created = $Created;
+    }
+
 
     public function getArrayCopy()
     {
@@ -170,8 +186,9 @@ class Registration implements InputFilterAwareInterface {
         $this->Address2 = $data['Address2'];
         $this->City = $data['City'];
         $this->State = $data['State'];
-        $this->Zip = $data['Zip'];
-        $this->Country = $data['Country'];
+        $this->setZip($data['Zip']);
+        $this->setCountry($data['Country']);
+        $this->Created = $data['Created'];
     }
 
     public function setInputFilter(InputFilterInterface $inputFilter)
@@ -194,7 +211,7 @@ class Registration implements InputFilterAwareInterface {
 
             $inputFilter->add([
                 'name' => 'First_Name',
-                'required' => false,
+                'required' => true,
                 'filters' => [
                     ['name' => 'StripTags'],
                     ['name' => 'StringTrim'],
@@ -208,7 +225,18 @@ class Registration implements InputFilterAwareInterface {
                             'max' => 50,
                             'messages' => [
                                 Validator\StringLength::TOO_SHORT => 'Must be at least 2 characters long',
-                                Validator\StringLength::TOO_LONG => 'Must be less than 50 characters long'
+                                Validator\StringLength::TOO_LONG => 'No greater than 50 characters long'
+                            ]
+                        ],
+                    ],
+                    [
+                        'name' => 'Alpha',
+                        'options' => [
+                            'allowWhiteSpace' => false,
+                            'messages' => [
+                                \Zend\I18n\Validator\Alpha::NOT_ALPHA => 'No numbers allowed',
+                                \Zend\I18n\Validator\Alpha::INVALID => 'Invalid name',
+                                \Zend\I18n\Validator\Alpha::STRING_EMPTY => 'Cannot be an empty string',
                             ]
                         ],
                     ],
@@ -217,7 +245,7 @@ class Registration implements InputFilterAwareInterface {
 
             $inputFilter->add([
                 'name' => 'Last_Name',
-                'required' => false,
+                'required' => true,
                 'filters' => [
                     ['name' => 'StripTags'],
                     ['name' => 'StringTrim'],
@@ -231,7 +259,18 @@ class Registration implements InputFilterAwareInterface {
                             'max' => 50,
                             'messages' => [
                                 Validator\StringLength::TOO_SHORT => 'Must be at least 2 characters long',
-                                Validator\StringLength::TOO_LONG => 'Must be less than 50 characters long'
+                                Validator\StringLength::TOO_LONG => 'No greater than 50 characters long'
+                            ]
+                        ],
+                    ],
+                    [
+                        'name' => 'Alpha',
+                        'options' => [
+                            'allowWhiteSpace' => false,
+                            'messages' => [
+                                \Zend\I18n\Validator\Alpha::NOT_ALPHA => 'No numbers allowed',
+                                \Zend\I18n\Validator\Alpha::INVALID => 'Invalid name',
+                                \Zend\I18n\Validator\Alpha::STRING_EMPTY => 'Cannot be an empty string',
                             ]
                         ],
                     ],
@@ -240,7 +279,7 @@ class Registration implements InputFilterAwareInterface {
 
             $inputFilter->add([
                 'name' => 'Address1',
-                'required' => false,
+                'required' => true,
                 'filters' => [
                     ['name' => 'StripTags'],
                     ['name' => 'StringTrim'],
@@ -254,7 +293,7 @@ class Registration implements InputFilterAwareInterface {
                             'max' => 150,
                             'messages' => [
                                 Validator\StringLength::TOO_SHORT => 'Must be at least 2 characters long',
-                                Validator\StringLength::TOO_LONG => 'Must be less than 150 characters long'
+                                Validator\StringLength::TOO_LONG => 'No greater than 150 characters long'
                             ]
                         ],
                     ],
@@ -277,7 +316,7 @@ class Registration implements InputFilterAwareInterface {
                             'max' => 150,
                             'messages' => [
                                 Validator\StringLength::TOO_SHORT => 'Must be at least 2 characters long',
-                                Validator\StringLength::TOO_LONG => 'Must be less than 150 characters long'
+                                Validator\StringLength::TOO_LONG => 'No greater than 150 characters long'
                             ]
                         ],
                     ],
@@ -286,7 +325,7 @@ class Registration implements InputFilterAwareInterface {
 
             $inputFilter->add([
                 'name' => 'City',
-                'required' => false,
+                'required' => true,
                 'filters' => [
                     ['name' => 'StripTags'],
                     ['name' => 'StringTrim'],
@@ -300,7 +339,7 @@ class Registration implements InputFilterAwareInterface {
                             'max' => 100,
                             'messages' => [
                                 Validator\StringLength::TOO_SHORT => 'Must be at least 2 characters long',
-                                Validator\StringLength::TOO_LONG => 'Must be less than 100 characters long'
+                                Validator\StringLength::TOO_LONG => 'No greater than 100 characters long'
                             ]
                         ],
                     ],
@@ -309,7 +348,7 @@ class Registration implements InputFilterAwareInterface {
 
             $inputFilter->add([
                 'name' => 'State',
-                'required' => false,
+                'required' => true,
                 'filters' => [
                     ['name' => 'StripTags'],
                     ['name' => 'StringTrim'],
@@ -323,7 +362,18 @@ class Registration implements InputFilterAwareInterface {
                             'max' => 2,
                             'messages' => [
                                 Validator\StringLength::TOO_SHORT => 'Must be at least 2 characters long',
-                                Validator\StringLength::TOO_LONG => 'Must be less than 3 characters long'
+                                Validator\StringLength::TOO_LONG => 'No greater than 2 characters long'
+                            ]
+                        ],
+                    ],
+                    [
+                        'name' => 'Alpha',
+                        'options' => [
+                            'allowWhiteSpace' => false,
+                            'messages' => [
+                                \Zend\I18n\Validator\Alpha::NOT_ALPHA => 'No numbers allowed',
+                                \Zend\I18n\Validator\Alpha::INVALID => 'Invalid name',
+                                \Zend\I18n\Validator\Alpha::STRING_EMPTY => 'Cannot be an empty string',
                             ]
                         ],
                     ],
@@ -332,7 +382,7 @@ class Registration implements InputFilterAwareInterface {
 
             $inputFilter->add([
                 'name' => 'Zip',
-                'required' => false,
+                'required' => true,
                 'filters' => [
                     ['name' => 'StripTags'],
                     ['name' => 'StringTrim'],
@@ -343,10 +393,18 @@ class Registration implements InputFilterAwareInterface {
                         'options' => [
                             'encoding' => 'UTF-8',
                             'min' => 5,
-                            'max' => 9,
+                            'max' => 10,
                             'messages' => [
                                 Validator\StringLength::TOO_SHORT => 'Must be at least 5 characters long',
-                                Validator\StringLength::TOO_LONG => 'Must be less than 10 characters long'
+                                Validator\StringLength::TOO_LONG => 'No greater than 10 characters long'
+                            ]
+                        ],
+                    ],
+                    [
+                        'name' => 'PostCode',
+                        'options' => [
+                            'messages' => [
+                                \Zend\I18n\Validator\PostCode::INVALID => 'Invalid Zip Code',
                             ]
                         ],
                     ],
@@ -369,12 +427,13 @@ class Registration implements InputFilterAwareInterface {
                             'max' => 100,
                             'messages' => [
                                 Validator\StringLength::TOO_SHORT => 'Must be at least 2 characters long',
-                                Validator\StringLength::TOO_LONG => 'Must be less than 101 characters long'
+                                Validator\StringLength::TOO_LONG => 'No greater than 100 characters long'
                             ]
                         ],
                     ],
                 ],
             ]);
+            $this->inputFilter = $inputFilter;
         }
         return $this->inputFilter;
     }
